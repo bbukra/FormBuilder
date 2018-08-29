@@ -13,11 +13,10 @@ const router = new VueRouter({
   mode: 'history'
 })
 
-var data = { a: 1 }
+
 new Vue({
   el: '#app',
-  data: data,
   template: '<App/>',
   components: { App },
   router
-}).$mount('#app')//mount the router on the app
+}).$mount('#app')

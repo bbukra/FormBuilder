@@ -1,4 +1,7 @@
 //import Forms_List from './Forms-List'
+export default {
+    name: 'Forms-List'
+}
 var form_id = 1;
 function insRow(form_Name)
 {
