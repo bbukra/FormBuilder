@@ -130,7 +130,8 @@ export default
                 fieldLabel: document.getElementById("fieldLabel" + i.toString()).value,
                 inputName : document.getElementById("inputName"  + i.toString()).value,
                 inputType : document.getElementById("inputTypeComboBox" + i.toString()).value,
-                form_Id   : form_Id
+                form_Id   : form_Id,
+                index     : i   //this is so that the fields will appear in the same order in "Submit Page"
           };
           var jsoned_field = JSON.stringify(field);
           this.$http.post('http://localhost:5000/add_New_Field', jsoned_field, {

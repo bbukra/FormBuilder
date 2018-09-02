@@ -55,8 +55,34 @@ def get_Forms_List():
     
     all_Forms_Names = []
     for idx in range(1 , form_count + 1): #from 1 to form_count
-        all_Forms_Names.append(Form_Builder_db['FormsNames'].find_one({"id": idx}, {"_id": False})) #returns a document
+        form = Form_Builder_db['FormsNames'].find_one({"id": idx}, {"_id": False})
+        all_Forms_Names.append(form) #returns a document
     return jsonify(all_Forms_Names)
+
+@app.route('/get_Form_Fields', methods=['GET'])
+@cross_origin(origin='*',headers=['Content- Type','Authorization'])
+def get_Form_Fields():
+    global Form_Builder_db
+    form_id = request.args.get('form_id')
+    form_id_str = "\"" + str(form_id) + "\"" #the form id is saved as str in the db
+
+    all_Fields = []
+    number_Of_Fields = Form_Builder_db['FormFields'].count_documents({"form_Id": form_id_str})
+    for idx in range(1, number_Of_Fields + 1):
+        field = Form_Builder_db['FormFields'].find_one({"form_Id": form_id_str, "index": idx}, {"_id": False, "id": False})
+        all_Fields.append(field)
+    print(all_Fields)
+    return jsonify(all_Fields)
+
+@app.route('/submit_Form', methods=['POST'])
+@cross_origin(origin='*',headers=['Content- Type','Authorization'])
+def submit_Form():
+    global Form_Builder_db
+    all_Fields = request.get_json(force=True)
+    Form_Builder_db['FormSubmissions'].insert_one(all_Fields)
+
+    resp = Response("")
+    return resp
 
 if __name__ == '__main__':
     app.run(debug=True)

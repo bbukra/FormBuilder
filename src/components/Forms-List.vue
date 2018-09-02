@@ -64,30 +64,45 @@ export default
 
         }
         ,
-        insertRow: function(curr_Form_Name, index)
+        insertRow: function(curr_Form_Name, form_id)
         {
-            var new_Row = document.getElementById('Forms_List_Table').insertRow(index);
-            var c1 = new_Row.insertCell(0);
-            var c2 = new_Row.insertCell(1);
-            var c3 = new_Row.insertCell(2);
-            var c4 = new_Row.insertCell(3);
-            var c5 = new_Row.insertCell(4);
+            var new_Row = document.getElementById('Forms_List_Table').insertRow(form_id);
+            var form_Id_Col = new_Row.insertCell(0);
+            var form_Name_Col = new_Row.insertCell(1);
+            var count_Submissions_Col = new_Row.insertCell(2);
+            var submit_Page_Col = new_Row.insertCell(3);
+            var sumbissions_Page_Col = new_Row.insertCell(4);
 
-            c1.innerHTML= index;
-            c2.innerHTML= curr_Form_Name;
-            c3.innerHTML= "# Submissions:TBD";
+            form_Id_Col.innerHTML= form_id;
+            form_Name_Col.innerHTML= curr_Form_Name;
+            count_Submissions_Col.innerHTML= "# Submissions:TBD";
 
-            var view_Submit_Page_Button = document.createElement("button");
-            view_Submit_Page_Button.setAttribute("id", "SubmitPage" + index.toString());
-            view_Submit_Page_Button.setAttribute("v-on:click", "SubmitPage(" + index.toString() + ")");
-            view_Submit_Page_Button.appendChild(document.createTextNode('View'))
-            c4.appendChild(view_Submit_Page_Button)
-            
-            var view_Submissions_Page_Button = document.createElement("button");
-            view_Submissions_Page_Button.setAttribute("id", "SubmissionsPage" + index.toString());
-            view_Submissions_Page_Button.setAttribute("v-on:click", "SubmissionsPage(" + index.toString() + ")");
-            view_Submissions_Page_Button.appendChild(document.createTextNode('View'))
-            c5.appendChild(view_Submissions_Page_Button)
+            var button_Properties;
+            var view_Submit_Page_Button = document.createElement("form");
+            view_Submit_Page_Button.setAttribute("action", "/Submit-Page/" + form_id.toString());
+            button_Properties = view_Submit_Page_Button.appendChild(document.createElement("input"));
+            button_Properties.setAttribute("type", "submit");
+            button_Properties.setAttribute("value", "View");
+            submit_Page_Col.appendChild(view_Submit_Page_Button);
+
+            //TODO: NEEDS FIXING
+            var view_Submissions_Page_Button = document.createElement("form");
+            view_Submissions_Page_Button.setAttribute("action", "/Submissions-Page?form_id=" + form_id.toString());
+            button_Properties = view_Submissions_Page_Button.appendChild(document.createElement("input"));
+            button_Properties.setAttribute("type", "submit");
+            button_Properties.setAttribute("value", "View");
+            sumbissions_Page_Col.appendChild(view_Submissions_Page_Button);
+        }
+        ,
+        SubmitPage: function() 
+        {
+            console.log(form_id);
+            // window.location='/Submit-Page?form_id='+form_id.toString();
+        }
+        ,
+        SubmissionsPage: function(form_id)
+        {
+            // window.location='/Submissions-Page?form_id='+form_id.toString();
         }
     }
     

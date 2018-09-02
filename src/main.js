@@ -7,7 +7,8 @@ Vue.use(VueResource)
 
 const routes = [
 { path: '/', component: require('./components/Forms-List.vue').default },
-{ path: '/Form-Builder', component: require('./components/Form-Builder.vue').default }
+{ path: '/Form-Builder', component: require('./components/Form-Builder.vue').default },
+{ path: '/Submit-Page/:formId', component: require('./components/Submit-Page.vue').default }
 ]
 
 const router = new VueRouter({
