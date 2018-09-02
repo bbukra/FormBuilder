@@ -24,7 +24,7 @@ def hello():
 def add_New_Form():
     
     global Form_Builder_db
-    form_count = Form_Builder_db['FormsNames'].count()
+    form_count = Form_Builder_db['FormsNames'].count_documents({})
 
     jsoned_form_Name = request.get_json(force=True)
     form_Name = jsoned_form_Name['formName']
@@ -51,7 +51,7 @@ def add_New_Field():
 @cross_origin(origin='*',headers=['Content- Type','Authorization'])
 def get_Forms_List():
     global Form_Builder_db
-    form_count = Form_Builder_db['FormsNames'].count()
+    form_count = Form_Builder_db['FormsNames'].count_documents({})
     
     all_Forms_Names = []
     for idx in range(1 , form_count + 1): #from 1 to form_count
@@ -71,7 +71,7 @@ def get_Form_Fields():
     for idx in range(1, number_Of_Fields + 1):
         field = Form_Builder_db['FormFields'].find_one({"form_Id": form_id_str, "index": idx}, {"_id": False, "id": False})
         all_Fields.append(field)
-    print(all_Fields)
+    
     return jsonify(all_Fields)
 
 @app.route('/submit_Form', methods=['POST'])
@@ -79,10 +79,46 @@ def get_Form_Fields():
 def submit_Form():
     global Form_Builder_db
     all_Fields = request.get_json(force=True)
+    form_id = all_Fields["form_Id"]
+    form_id_str = "\"" + str(form_id) + "\"" #the form id is saved as str in the db
+
+    number_of_sumbissions = Form_Builder_db['FormSubmissions'].count_documents({"form_Id": form_id})
+    all_Fields["submission_Index"] = number_of_sumbissions + 1
+    
+    number_Of_Fields = Form_Builder_db['FormFields'].count_documents({"form_Id": form_id_str})
+    for idx in range (1, number_Of_Fields + 1):
+        input_Name = all_Fields[str(idx)]['inputName']
+        all_Fields[str(idx)]['field_Label'] = get_Field_Label_By_Name(form_id_str, input_Name)
+
     Form_Builder_db['FormSubmissions'].insert_one(all_Fields)
 
     resp = Response("")
     return resp
+
+def get_Field_Label_By_Name(form_id_str, input_Name):
+    global Form_Builder_db
+
+    document = Form_Builder_db['FormFields'].find_one({"form_Id": form_id_str, "inputName": input_Name})
+    field_Label = document['fieldLabel']
+    return field_Label
+
+@app.route('/get_Form_Submissions', methods=['GET'])
+@cross_origin(origin='*',headers=['Content- Type','Authorization'])
+def get_Form_Submissions():
+    global Form_Builder_db
+    form_id = request.args.get('form_id')
+    form_id_str = "\"" + str(form_id) + "\"" #the form id is saved as str in the db
+
+    number_of_sumbissions = Form_Builder_db['FormSubmissions'].count_documents({"form_Id": form_id})
+    all_Submissions = []
+    for idx in range(1, number_of_sumbissions + 1):
+        submission = Form_Builder_db['FormSubmissions'].find_one({"form_Id": form_id, "submission_Index": idx}, {"_id": False})
+        all_Submissions.append(submission)
+    
+    number_Of_Fields = Form_Builder_db['FormFields'].count_documents({"form_Id": form_id_str})
+    all_Submissions.append(number_Of_Fields) #for usage on client side
+    
+    return jsonify(all_Submissions)
 
 if __name__ == '__main__':
     app.run(debug=True)

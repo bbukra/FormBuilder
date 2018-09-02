@@ -85,9 +85,8 @@ export default
             button_Properties.setAttribute("value", "View");
             submit_Page_Col.appendChild(view_Submit_Page_Button);
 
-            //TODO: NEEDS FIXING
             var view_Submissions_Page_Button = document.createElement("form");
-            view_Submissions_Page_Button.setAttribute("action", "/Submissions-Page?form_id=" + form_id.toString());
+            view_Submissions_Page_Button.setAttribute("action", "/Submissions-Page/" + form_id.toString());
             button_Properties = view_Submissions_Page_Button.appendChild(document.createElement("input"));
             button_Properties.setAttribute("type", "submit");
             button_Properties.setAttribute("value", "View");
