@@ -154,6 +154,9 @@ table {
     white-space: nowrap;
     text-align: center;
   }
+  tr:nth-of-type(1):hover {
+      background-color: rgb(223, 223, 223);
+  }
 .link_Buttons {
     height: 48px;
     width: 133.33333px;

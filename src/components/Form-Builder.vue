@@ -122,7 +122,7 @@ export default
         setTimeout(function () {
             window.alert("The form was successfully added to the list of forms!");
             window.location = '/';
-        }, 200); //Wait some time for the fields to be added to the database
+        }, 600); //Wait some time for the fields to be added to the database
       }
       ,
       add_Fields_To_Form: function(form_Id) 

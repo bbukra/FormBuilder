@@ -1,21 +1,25 @@
 # form-builder
 
 > A Vue.js project
-
+> Tested and working using Windows x64, and Google Chrome
 ## Build Setup
 
-``` bash
-# install dependencies
-npm install
+# 1. Install latest python version(link)
+#   (Note: Make sure to tick V in the installaion checkbox "Add python 3.7 to PATH")
 
-# serve with hot reload at localhost:8080
-npm run dev
+# 2. Install mongodb (Community Server) (https://www.mongodb.com/download-center?jmp=nav#community)
+#   - Add mongodb's bin folder to your PATH variables (if it doesn't exist)
+#     You can use the following guide : https://dangphongvanthanh.wordpress.com/2017/06/12/add-mongos-bin-folder-to-the-path-environment-variable/
 
-# build for production with minification
-npm run build
+# 3. Install npm (https://nodejs.org/en/download)
 
-# build for production and view the bundle analyzer report
-npm run build --report
-```
+# 4. Clone the repository to your machine
 
-For a detailed explanation on how things work, check out the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
+# 5. Open the /Run folder and execute the files in the following order (make sure you wait until each operation is completed):
+#   a.  Run "Install modules.bat" (installing Python modules and Node_modules)
+#   b.  Run "Run mongod.bat" (Creates C:\data\db directory for mongoDB and runs mongod)
+#   c.  Run "Run Server.bat"
+#   d.  Run "Run Client.bat"
+#   e.  Run "Open Webpage.bat"
+
+# 6. Profit!
