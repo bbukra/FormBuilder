@@ -106,8 +106,7 @@ export default
             }
             }).then( response => {
                 //add the fields to the form in the database
-                this.add_Fields_To_Form(response.data.toString()),
-                this.form_Successfully_Added()
+                this.add_Fields_To_Form(response.data.toString())
               })
         }
         else
@@ -122,12 +121,13 @@ export default
         setTimeout(function () {
             window.alert("The form was successfully added to the list of forms!");
             window.location = '/';
-        }, 600); //Wait some time for the fields to be added to the database
+        }, 200); //Wait some time for the fields to be added to the database
       }
       ,
       add_Fields_To_Form: function(form_Id) 
       {
         var i;
+        var all_Fields = [];
         for (i = 1; i <= this.fields_Count; i++)
         {
           var field = { 
@@ -137,15 +137,24 @@ export default
                 form_Id   : form_Id,
                 index     : i   //this is so that the fields will appear in the same order in "Submit Page"
           };
-          var jsoned_field = JSON.stringify(field);
-          this.$http.post('http://localhost:5000/add_New_Field', jsoned_field, {
-            headers: {
-              'Accept': 'application/json',
-              'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
-              'Access-Control-Allow-Origin': 'http://localhost:8080'
-            }
-          })
+          all_Fields.push({"fieldLabel": field.fieldLabel,
+                            "inputName": field.inputName,
+                            "inputType": field.inputType,
+                            "form_Id":   field.form_Id,
+                            "index":     field.index      });
         }
+        var jsoned_fields = JSON.stringify(all_Fields);
+        console.log(jsoned_fields);
+        
+        this.$http.post('http://localhost:5000/add_New_Fields', jsoned_fields, {
+           headers: {
+             'Accept': 'application/json',
+             'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
+             'Access-Control-Allow-Origin': 'http://localhost:8080'
+           }
+        }).then( response => {
+                this.form_Successfully_Added()
+           })
       }
       ,
       check_Data_Validity: function()

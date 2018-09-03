@@ -36,14 +36,14 @@ def add_New_Form():
     resp = Response(form_Id_Str)
     return resp
 
-@app.route('/add_New_Field', methods=['GET', 'POST'])
+@app.route('/add_New_Fields', methods=['GET', 'POST'])
 @cross_origin(origin='*',headers=['Content- Type','Authorization'])
 def add_New_Field():
     global Form_Builder_db
     
-    field = request.get_json(force=True)    
-    
-    Form_Builder_db['FormFields'].insert_one(field)
+    fields = request.get_json(force=True)    
+    print (fields)
+    Form_Builder_db['FormFields'].insert_many(fields)
     resp = Response("")
     return resp
 
