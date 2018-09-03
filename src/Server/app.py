@@ -56,7 +56,9 @@ def get_Forms_List():
     all_Forms_Names = []
     for idx in range(1 , form_count + 1): #from 1 to form_count
         form = Form_Builder_db['FormsNames'].find_one({"id": idx}, {"_id": False})
-        all_Forms_Names.append(form) #returns a document
+        number_of_sumbissions = Form_Builder_db['FormSubmissions'].count_documents({"form_Id": str(idx)})
+        form['submissionsCount'] = number_of_sumbissions
+        all_Forms_Names.append(form) 
     return jsonify(all_Forms_Names)
 
 @app.route('/get_Form_Fields', methods=['GET'])

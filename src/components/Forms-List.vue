@@ -1,5 +1,6 @@
 <template>
     <html>
+        <h1>Create the Form You Want</h1>
         <body>
             <table id="Forms_List_Table">
                 <tr>
@@ -59,12 +60,15 @@ export default
             var idx;
             for (idx = 0; idx < forms_Names_Array.length ; idx++)
             {
-                this.insertRow(forms_Names_Array[idx].FormName, forms_Names_Array[idx].id);
+                var form_id = forms_Names_Array[idx].id;
+                var curr_Form_Name = forms_Names_Array[idx].FormName;
+                var number_of_submissions = forms_Names_Array[idx].submissionsCount;
+                this.insertRow(curr_Form_Name, form_id, number_of_submissions);
             }
 
         }
         ,
-        insertRow: function(curr_Form_Name, form_id)
+        insertRow: function(curr_Form_Name, form_id, number_of_submissions)
         {
             var new_Row = document.getElementById('Forms_List_Table').insertRow(form_id);
             var form_Id_Col = new_Row.insertCell(0);
@@ -75,12 +79,13 @@ export default
 
             form_Id_Col.innerHTML= form_id;
             form_Name_Col.innerHTML= curr_Form_Name;
-            count_Submissions_Col.innerHTML= "# Submissions:TBD";
+            count_Submissions_Col.innerHTML= number_of_submissions;
 
             var button_Properties;
             var view_Submit_Page_Button = document.createElement("form");
             view_Submit_Page_Button.setAttribute("action", "/Submit-Page/" + form_id.toString());
             button_Properties = view_Submit_Page_Button.appendChild(document.createElement("input"));
+            button_Properties.setAttribute("class", "link_Buttons");
             button_Properties.setAttribute("type", "submit");
             button_Properties.setAttribute("value", "View");
             submit_Page_Col.appendChild(view_Submit_Page_Button);
@@ -88,23 +93,106 @@ export default
             var view_Submissions_Page_Button = document.createElement("form");
             view_Submissions_Page_Button.setAttribute("action", "/Submissions-Page/" + form_id.toString());
             button_Properties = view_Submissions_Page_Button.appendChild(document.createElement("input"));
+            button_Properties.setAttribute("class", "link_Buttons");
             button_Properties.setAttribute("type", "submit");
             button_Properties.setAttribute("value", "View");
             sumbissions_Page_Col.appendChild(view_Submissions_Page_Button);
-        }
-        ,
-        SubmitPage: function() 
-        {
-            console.log(form_id);
-            // window.location='/Submit-Page?form_id='+form_id.toString();
-        }
-        ,
-        SubmissionsPage: function(form_id)
-        {
-            // window.location='/Submissions-Page?form_id='+form_id.toString();
         }
     }
     
 }
 </script>
-<style src="./Forms-List.css"></style>
+
+<style>
+html {
+    background-color: #57c2da;
+}
+h1 {
+    color: white;
+    font-family: HelveticaNeueW01-75Bold,HelveticaNeueW02-75Bold,HelveticaNeueW10-75Bold,Helvetica Neue,Arial,Helvetica,sans-serif;
+    font-weight: 400;
+    font-size: 6vw;
+    line-height: 1.15;
+    margin: 0 0 6%;
+}
+table {
+    border-collapse: collapse;
+    width: 60%;
+    margin: auto;
+    font-family: "HelveticaNeueW01-45Ligh",arial,sans-serif;
+    color: #363636;
+    font-size: 18px;
+    line-height: 1.3;
+
+}
+  
+  
+  thead {
+    color: #fff;
+    border-top: 1px solid #cdcdcd;
+    border-bottom: 1px solid #cdcdcd;
+    font-family: helveticaneuew01-75bold,Helvetica,Arial,sans-serif;
+    font-size: 14px;
+    display: table-header-group;
+    vertical-align: middle;
+    border-color: inherit;
+    line-height: 1.3;
+  }
+
+  tr:nth-of-type(2n) {
+    background-color: #f1f1f1;
+  }
+  tr:nth-of-type(2n+1) {
+    background-color: rgb(223, 223, 223);
+  }
+  tr:hover {
+    background-color: rgb(91, 146, 248);
+  }
+  th, td {
+    border: 1px solid black;
+    padding: 10px;
+    white-space: nowrap;
+    text-align: center;
+  }
+.link_Buttons {
+    height: 48px;
+    width: 133.33333px;
+    border: 0;
+    box-shadow: none;
+    text-align: center;
+    font-family: "HelveticaNeueW01-65Medi",arial,sans-serif;
+    position: relative;
+    line-height: 38px;
+    font-size: 16px;
+    padding: 0;
+    color: #fff;
+    background-color: #08c;
+}
+.link_Buttons:hover {
+    background-color: rgba(0, 136, 204, 0.774);
+}
+.link_Buttons:active {
+    top:1px;
+}
+
+#New_Form_Button { 
+    font-size: 2vw;
+    color: #3182c8;
+    background-color: #fff;
+    font-family: HelveticaNeueW01-65Medi,HelveticaNeueW02-65Medi,HelveticaNeueW10-65Medi,Helvetica Neue,Arial,Helvetica,sans-serif;
+    padding: .6em 2.1em;
+    border-radius: 1.3em;
+    display: inline-block;
+    line-height: 1.6;
+    margin: 0 0 2px;
+    position: relative;
+    margin-bottom: 2px;
+    cursor: pointer;
+    text-align: center;
+    -webkit-font-smoothing: antialiased;
+    font-weight: 300;
+}
+#New_Form_Button:hover { 
+    background-color: rgb(226, 226, 226);
+}
+</style>

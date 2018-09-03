@@ -1,5 +1,6 @@
 <template>
     <html>
+        <h2>Form Submissions</h2>
         <body id="Submissions_Page">
 
         </body>
@@ -49,6 +50,7 @@ export default
            if(this.createTableHeaders(all_Submissions_Arr, number_of_fields) == TABLE_NOT_CREATED)
            {
                window.alert("Please submit at least one form in order to see submissions list.");
+               window.location ='/';
                return;
            }
            for (var i = 0; i < all_Submissions_Arr.length; i++)
@@ -99,4 +101,53 @@ export default
     
 }
 </script>
-<style src="./Forms-List.css"></style>
+<style>
+h2 {
+    color: white;
+    font-family: HelveticaNeueW01-75Bold,HelveticaNeueW02-75Bold,HelveticaNeueW10-75Bold,Helvetica Neue,Arial,Helvetica,sans-serif;
+    font-weight: 400;
+    font-size: 4vw;
+    line-height: 1.15;
+    margin: 0 0 6%;
+}
+
+table {
+    border-collapse: collapse;
+    width: 60%;
+    margin: auto;
+    font-family: "HelveticaNeueW01-45Ligh",arial,sans-serif;
+    color: #363636;
+    font-size: 18px;
+    line-height: 1.3;
+
+}
+  
+  
+  thead {
+    color: #fff;
+    border-top: 1px solid #cdcdcd;
+    border-bottom: 1px solid #cdcdcd;
+    font-family: helveticaneuew01-75bold,Helvetica,Arial,sans-serif;
+    font-size: 14px;
+    display: table-header-group;
+    vertical-align: middle;
+    border-color: inherit;
+    line-height: 1.3;
+  }
+
+  tr:nth-of-type(2n) {
+    background-color: #f1f1f1;
+  }
+  tr:nth-of-type(2n+1) {
+    background-color: rgb(223, 223, 223);
+  }
+  tr:hover {
+    background-color: rgb(91, 146, 248);
+  }
+  th, td {
+    border: 1px solid black;
+    padding: 10px;
+    white-space: nowrap;
+    text-align: center;
+  }
+</style>

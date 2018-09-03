@@ -1,22 +1,22 @@
 <template>
   <html id="Form_Builder_Page">
-    Form Name: <input type="text" id="Form_Name">
+    <h2>Build Your Form</h2>
+    Form Name: <input type="text" id="Form_Name" class="Inputs">
     <br>
-    Field label: <input type="text" id="fieldLabel1">
-    Input name:  <input type="text" id="inputName1">
+    Field label: <input type="text" id="fieldLabel1" class="Inputs">
+    Input name:  <input type="text" id="inputName1" class="Inputs">
     Input type: 
-    <select name="input type" id = "inputTypeComboBox1">
-      <option value="text">  text  </option>
-      <option value="color"> color </option>
-      <option value="date">  date  </option>
-      <option value="email"> email </option>
-      <option value="tel">   tel   </option>
-      <option value="number">number</option>
+    <select name="input type" id = "inputTypeComboBox1" class="Options">
+      <option value="text">  Text  </option>
+      <option value="color"> Color </option>
+      <option value="date">  Date  </option>
+      <option value="email"> Email </option>
+      <option value="tel">   Telephone   </option>
+      <option value="number">Number</option>
     </select>
-
-    <button id="AddFieldButton" v-on:click="add_Field">Add Field</button>
     <br>
-    <button id="SubmitButton" v-on:click="add_Form_To_Form_List">Submit</button>
+    <button id="AddFieldButton" class="Buttons" v-on:click="add_Field">Add Field</button>
+    <button id="SubmitButton" class="Buttons" v-on:click="add_Form_To_Form_List">Submit</button>
   </html>
 </template>
 
@@ -59,6 +59,7 @@ export default
         var new_Field_Label = document.createElement("input");
         new_Field_Label.setAttribute("type", "text");
         new_Field_Label.setAttribute("id", "fieldLabel" + this.fields_Count.toString());
+        new_Field_Label.setAttribute("class", "Inputs");
         Form_Builder_Page.insertBefore(document.createTextNode("Field label: "), add_Field_Button);
         Form_Builder_Page.insertBefore(new_Field_Label, add_Field_Button);
       }
@@ -70,8 +71,10 @@ export default
         var input_Type_ComboBox = document.getElementById("inputTypeComboBox1");
         var new_Input_Type_ComboBox = input_Type_ComboBox.cloneNode(true);
         new_Input_Type_ComboBox.setAttribute("id", "inputTypeComboBox" + this.fields_Count.toString());
+        new_Input_Type_ComboBox.setAttribute("class", "Input_Types");
         Form_Builder_Page.insertBefore(document.createTextNode(" Input type: "), add_Field_Button);
         Form_Builder_Page.insertBefore(new_Input_Type_ComboBox, add_Field_Button);
+        Form_Builder_Page.insertBefore(document.createElement("br"), add_Field_Button); //reached end of line
       }
       ,
       new_Line_Input_Name: function() 
@@ -81,6 +84,7 @@ export default
         var new_Input_Name = document.createElement("input");
         new_Input_Name.setAttribute("type", "text");
         new_Input_Name.setAttribute("id", "inputName" + this.fields_Count.toString());
+        new_Input_Name.setAttribute("class", "Inputs");
         Form_Builder_Page.insertBefore(document.createTextNode(" Input name: "), add_Field_Button);
         Form_Builder_Page.insertBefore(new_Input_Name, add_Field_Button);
       }
@@ -193,6 +197,12 @@ export default
 
 // })
 <style>
+html {
+  color: white;
+  font-family: HelveticaNeueW01-75Bold,HelveticaNeueW02-75Bold,HelveticaNeueW10-75Bold,Helvetica Neue,Arial,Helvetica,sans-serif;
+  font-weight: 200;
+  font-size: 18px;
+}
 #Form-Builder {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -200,5 +210,84 @@ export default
   text-align: center;
   color: #2c3e50;
   margin-top: 60px;
+}
+h2 {
+    color: white;
+    font-family: HelveticaNeueW01-75Bold,HelveticaNeueW02-75Bold,HelveticaNeueW10-75Bold,Helvetica Neue,Arial,Helvetica,sans-serif;
+    font-weight: 400;
+    font-size: 4vw;
+    line-height: 1.3;
+    margin: 0 0 4%;
+}
+.Inputs {
+  border-width: 0 0 1px;
+  border-style: solid;
+  background-color: #57c2da;
+  text-align: center;
+  width: 10%;
+  margin-bottom: 20px;
+}
+.Buttons {
+	-moz-box-shadow:inset 0px 1px 0px 0px #54a3f7;
+	-webkit-box-shadow:inset 0px 1px 0px 0px #54a3f7;
+	box-shadow:inset 0px 1px 0px 0px #54a3f7;
+	background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #007dc1), color-stop(1, #0061a7));
+	background:-moz-linear-gradient(top, #007dc1 5%, #0061a7 100%);
+	background:-webkit-linear-gradient(top, #007dc1 5%, #0061a7 100%);
+	background:-o-linear-gradient(top, #007dc1 5%, #0061a7 100%);
+	background:-ms-linear-gradient(top, #007dc1 5%, #0061a7 100%);
+	background:linear-gradient(to bottom, #007dc1 5%, #0061a7 100%);
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#007dc1', endColorstr='#0061a7',GradientType=0);
+	background-color:#007dc1;
+	-moz-border-radius:3px;
+	-webkit-border-radius:3px;
+	border-radius:3px;
+	border:1px solid #124d77;
+	display:inline-block;
+	cursor:pointer;
+	color:#ffffff;
+	font-family:Arial;
+	font-size:13px;
+	padding:6px 24px;
+	text-decoration:none;
+	text-shadow:0px 1px 0px #154682;
+}
+.Buttons:hover {
+	background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #0061a7), color-stop(1, #007dc1));
+	background:-moz-linear-gradient(top, #0061a7 5%, #007dc1 100%);
+	background:-webkit-linear-gradient(top, #0061a7 5%, #007dc1 100%);
+	background:-o-linear-gradient(top, #0061a7 5%, #007dc1 100%);
+	background:-ms-linear-gradient(top, #0061a7 5%, #007dc1 100%);
+	background:linear-gradient(to bottom, #0061a7 5%, #007dc1 100%);
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#0061a7', endColorstr='#007dc1',GradientType=0);
+	background-color:#0061a7;
+}
+.Buttons:active {
+	position:relative;
+	top:1px;
+}
+#Form_Name {
+  margin-bottom: 25px;
+  font-family: Georgia, serif;
+  font-size: 25px;
+  letter-spacing: 2px;
+  word-spacing: 2px;
+  color: #000000;
+  font-weight: 700;
+  text-decoration: none;
+  font-style: normal;
+  font-variant: normal;
+  text-transform: none;
+  text-align: center;
+}
+
+select {
+    padding: 5px 8px;
+    width: 10%;
+    border-width: 0 1px 0 1px;
+    border-style: solid;
+    box-shadow: none;
+    background: #f2f2f2;
+    font-family: HelveticaNeueW01-75Bold,HelveticaNeueW02-75Bold,HelveticaNeueW10-75Bold,Helvetica Neue,Arial,Helvetica,sans-serif;
 }
 </style>

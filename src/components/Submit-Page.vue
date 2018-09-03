@@ -1,7 +1,10 @@
 <template>
-    <form id="Submit_Form_Page" v-on:submit.prevent="submit_Form">
-        <input id="Submit_Button" type="submit" value="Submit">
-    </form>
+    <html>
+        <h2>Form Submission</h2>
+        <form id="Submit_Form_Page" v-on:submit.prevent="submit_Form">
+            <input id="Submit_Button" type="submit" value="Submit">
+        </form>
+    </html>
 </template>
 
 <script>
@@ -57,11 +60,10 @@ export default
         {
             var inputs = document.getElementById("Submit_Form_Page");
             var Submit_Button = document.getElementById("Submit_Button");
-            //field label
-            var field_Label = document.createTextNode(fieldLabel);
-            inputs.insertBefore(field_Label, Submit_Button);
+            
             //input textbox
             var textbox = document.createElement("input");
+            textbox.setAttribute("placeholder", fieldLabel);
             textbox.setAttribute("id", index.toString()); //needed for the fields to appear in the same order in "Submissions Page"
             textbox.setAttribute("type", inputType);
             textbox.setAttribute("name", inputName);
@@ -123,4 +125,51 @@ export default
     
 }
 </script>
-<style src="./Forms-List.css"></style>
+<style>
+html {
+    background-color: #57c2da;
+}
+h2 {
+    color: white;
+    font-family: HelveticaNeueW01-75Bold,HelveticaNeueW02-75Bold,HelveticaNeueW10-75Bold,Helvetica Neue,Arial,Helvetica,sans-serif;
+    font-weight: 400;
+    font-size: 4vw;
+    line-height: 1.15;
+    margin: 0 0 6%;
+}
+#Submit_Button {
+    font-size: 2vw;
+    color: #3182c8;
+    background-color: #fff;
+    font-family: HelveticaNeueW01-65Medi,HelveticaNeueW02-65Medi,HelveticaNeueW10-65Medi,Helvetica Neue,Arial,Helvetica,sans-serif;
+    padding: .4em 1.5em;
+    border-radius: 1em;
+    display: inline-block;
+    line-height: 1.6;
+    margin: 0 0 5px;
+    position: relative;
+    margin-bottom: 5px;
+    cursor: pointer;
+    text-align: center;
+    -webkit-font-smoothing: antialiased;
+    font-weight: 300;
+    margin-top: 30px;
+}
+#Submit_Button:hover {
+    background-color: #62a7e4;
+    color: #fff;
+    transition: background-color .3s,color .3s ease-in-out;
+}
+
+
+input {
+    line-height: 30px;
+    border-width: 0 0 1px;
+    border-style: solid;
+    background-color: white;
+    margin-bottom: 10px;
+}
+p {
+    color: white;
+}
+</style>
