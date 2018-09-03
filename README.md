@@ -1,17 +1,16 @@
-# form-builder
+# Form-Builder
 
-> A Vue.js project
-> Tested and working using Windows x64, and Google Chrome
+> Tested using Windows x64, and Google Chrome.
 ## Build Setup
 
-### 1. Install latest python version(link)
+### 1. Install latest python 3 version from [here](https://www.python.org/downloads/)
 ###   (Note: Make sure to tick V in the installaion checkbox "Add python 3.7 to PATH")
 
-### 2. Install mongodb (Community Server) (https://www.mongodb.com/download-center?jmp=nav#community)
+### 2. Install mongodb (Community Server) from [here](https://www.mongodb.com/download-center?jmp=nav#community)
 ###   - Add mongodb's bin folder to your PATH variables (if it doesn't exist)
-###     You can use the following guide : https://dangphongvanthanh.wordpress.com/2017/06/12/add-mongos-bin-folder-to-the-path-environment-variable/
+###     You can use the this [guide](https://dangphongvanthanh.wordpress.com/2017/06/12/add-mongos-bin-folder-to-the-path-environment-variable/)
 
-### 3. Install npm (https://nodejs.org/en/download)
+### 3. Install nodeJS from [here](https://nodejs.org/en/download)
 
 ### 4. Clone the repository to your machine
 
