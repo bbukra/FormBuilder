@@ -56,7 +56,7 @@ export default
         ,
         display_All_Forms: function(forms_Names_Array)
         {
-            var Forms_List_Table = document.getElementById("Forms_List_Table")
+            var Forms_List_Table = document.getElementById("Forms_List_Table");
             var idx;
             for (idx = 0; idx < forms_Names_Array.length ; idx++)
             {
@@ -76,11 +76,13 @@ export default
             var count_Submissions_Col = new_Row.insertCell(2);
             var submit_Page_Col = new_Row.insertCell(3);
             var sumbissions_Page_Col = new_Row.insertCell(4);
-
+            //form id
             form_Id_Col.innerHTML= form_id;
+            //form name
             form_Name_Col.innerHTML= curr_Form_Name;
+            //# of submissions
             count_Submissions_Col.innerHTML= number_of_submissions;
-
+            //Submit page button
             var button_Properties;
             var view_Submit_Page_Button = document.createElement("form");
             view_Submit_Page_Button.setAttribute("action", "/Submit-Page/" + form_id.toString());
@@ -89,7 +91,7 @@ export default
             button_Properties.setAttribute("type", "submit");
             button_Properties.setAttribute("value", "View");
             submit_Page_Col.appendChild(view_Submit_Page_Button);
-
+            //Submissions list page button
             var view_Submissions_Page_Button = document.createElement("form");
             view_Submissions_Page_Button.setAttribute("action", "/Submissions-Page/" + form_id.toString());
             button_Properties = view_Submissions_Page_Button.appendChild(document.createElement("input"));

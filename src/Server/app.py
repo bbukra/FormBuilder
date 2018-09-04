@@ -12,7 +12,6 @@ CORS(app)
 
 client = MongoClient()
 Form_Builder_db = client.FormBuilder
- #the number of forms currently in the forms list db
 
 
 @app.route("/")
@@ -26,10 +25,10 @@ def add_New_Form():
     global Form_Builder_db
     form_count = Form_Builder_db['FormsNames'].count_documents({})
 
-    jsoned_form_Name = request.get_json(force=True)
-    form_Name = jsoned_form_Name['formName']
+    jsoned_Added_Form_Name = request.get_json(force=True)
+    added_Form_Name = jsoned_Added_Form_Name['formName']
     form_id = form_count + 1
-    form = {"id": form_id, "FormName": form_Name}
+    form = {"id": form_id, "FormName": added_Form_Name}
     Form_Builder_db['FormsNames'].insert_one(form)
     
     form_Id_Str = "\"" + str(form_id) + "\""
@@ -42,7 +41,6 @@ def add_New_Field():
     global Form_Builder_db
     
     fields = request.get_json(force=True)    
-    print (fields)
     Form_Builder_db['FormFields'].insert_many(fields)
     resp = Response("")
     return resp
@@ -55,7 +53,7 @@ def get_Forms_List():
     
     all_Forms_Names = []
     for idx in range(1 , form_count + 1): #from 1 to form_count
-        form = Form_Builder_db['FormsNames'].find_one({"id": idx}, {"_id": False})
+        form = Form_Builder_db['FormsNames'].find_one({"id": idx}, {"_id": False})  #exactly one form is matching idx, so find_one returns it
         number_of_sumbissions = Form_Builder_db['FormSubmissions'].count_documents({"form_Id": str(idx)})
         form['submissionsCount'] = number_of_sumbissions
         all_Forms_Names.append(form) 
@@ -71,7 +69,7 @@ def get_Form_Fields():
     all_Fields = []
     number_Of_Fields = Form_Builder_db['FormFields'].count_documents({"form_Id": form_id_str})
     for idx in range(1, number_Of_Fields + 1):
-        field = Form_Builder_db['FormFields'].find_one({"form_Id": form_id_str, "index": idx}, {"_id": False, "id": False})
+        field = Form_Builder_db['FormFields'].find_one({"form_Id": form_id_str, "index": idx}, {"_id": False, "id": False}) #exactly one field is matching idx and this form id
         all_Fields.append(field)
     
     return jsonify(all_Fields)
@@ -114,7 +112,7 @@ def get_Form_Submissions():
     number_of_sumbissions = Form_Builder_db['FormSubmissions'].count_documents({"form_Id": form_id})
     all_Submissions = []
     for idx in range(1, number_of_sumbissions + 1):
-        submission = Form_Builder_db['FormSubmissions'].find_one({"form_Id": form_id, "submission_Index": idx}, {"_id": False})
+        submission = Form_Builder_db['FormSubmissions'].find_one({"form_Id": form_id, "submission_Index": idx}, {"_id": False}) #exactly one submission is matching idx and this form id
         all_Submissions.append(submission)
     
     number_Of_Fields = Form_Builder_db['FormFields'].count_documents({"form_Id": form_id_str})

@@ -75,15 +75,15 @@ export default
        {
             if(all_Submissions_Arr.length == 0) 
             {
-                return false;
+                return false; //No submissions available
             }
             var page = document.getElementById("Submissions_Page");
             var table = document.createElement("table");
             table.setAttribute("id", "Submissions_Table");
             page.appendChild(table);
-            var row = table.appendChild(document.createElement("tr"));
+            var row = table.appendChild(document.createElement("tr")); // The header row of the table
 
-            var first_col = document.createElement("th");
+            var first_col = document.createElement("th"); //the first column will count the submissions
             first_col.appendChild(document.createTextNode("#"));
             row.appendChild(first_col);
 
@@ -95,7 +95,7 @@ export default
                 curr_Header.appendChild(document.createTextNode(submission[i].field_Label));
                 row.appendChild(curr_Header);
             }
-            return true;
+            return true; //Table created successfully
        }
     }
     

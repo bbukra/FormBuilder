@@ -44,7 +44,6 @@ export default
         display_All_Fields: function(all_Fields_Arr)
         {
             var idx;
-            var inputs = document.getElementById("Submit_Form_Page");
             //add the fields to the form
             for (idx = 1; idx <= all_Fields_Arr.length ; idx++)
             {
@@ -61,6 +60,10 @@ export default
             var inputs = document.getElementById("Submit_Form_Page");
             var Submit_Button = document.getElementById("Submit_Button");
             
+            if(inputType == 'tel') 
+            {
+                this.add_Tel_Combo(index);
+            }
             //input textbox
             var textbox = document.createElement("input");
             textbox.setAttribute("placeholder", fieldLabel);
@@ -94,11 +97,25 @@ export default
             {
                 var curr_Field = document.getElementById(idx.toString());
                 var field = { 
-                inputName : curr_Field.getAttribute("name"),
-                data      : curr_Field.value
-                // inputType : document.getElementById("inputTypeComboBox" + i.toString()).value,
+                    inputName : curr_Field.getAttribute("name"),
+                    data      : curr_Field.value
                 };
-                // var jsoned_field = JSON.stringify(field);
+                //test tel validity
+                if(curr_Field.getAttribute("type") == "tel") 
+                {
+                    if(!this.test_Tel_Validity(curr_Field, field, idx))
+                    {
+                        return;
+                    }
+                }
+                //test email domain validity ('@' is taken care of by Chrome)
+                if(curr_Field.getAttribute("type") == "email")
+                {
+                    if(!this.test_Email_Validity(curr_Field, field))
+                    {
+                        return;
+                    }
+                }
                 all_Fields_Obj[idx.toString()] = field;
             }
             all_Fields_Obj["form_Id"] = this.form_id.toString();
@@ -112,6 +129,112 @@ export default
             }).then( response => {
                 this.form_Successfully_Submitted()
               })
+        }
+        ,
+        add_Tel_Combo: function(index) 
+        {
+            var inputs = document.getElementById("Submit_Form_Page");
+            var Submit_Button = document.getElementById("Submit_Button");
+            var prefix_Combobox = document.createElement("select");
+            prefix_Combobox.setAttribute("id", "Combobox" + index.toString());
+            prefix_Combobox.setAttribute("class", "Tel_Combos");
+            
+            var option = document.createElement("option");
+            option.setAttribute("value", "08");
+            option.appendChild(document.createTextNode("08"));
+            prefix_Combobox.appendChild(option);
+
+            option = document.createElement("option");
+            option.setAttribute("value", "03");
+            option.appendChild(document.createTextNode("03"));
+            prefix_Combobox.appendChild(option);
+
+            option = document.createElement("option");
+            option.setAttribute("value", "04");
+            option.appendChild(document.createTextNode("04"));
+            prefix_Combobox.appendChild(option);
+            
+            option = document.createElement("option");
+            option.setAttribute("value", "050");
+            option.appendChild(document.createTextNode("050"));
+            prefix_Combobox.appendChild(option);
+
+            option = document.createElement("option");
+            option.setAttribute("value", "052");
+            option.appendChild(document.createTextNode("052"));
+            prefix_Combobox.appendChild(option);
+
+            option = document.createElement("option");
+            option.setAttribute("value", "054");
+            option.appendChild(document.createTextNode("054"));
+            prefix_Combobox.appendChild(option);
+
+            option = document.createElement("option");
+            option.setAttribute("value", "058");
+            option.appendChild(document.createTextNode("058"));
+            prefix_Combobox.appendChild(option);
+            inputs.insertBefore(prefix_Combobox, Submit_Button);
+        }
+        ,
+        is_Tel_Num_Valid: function(tel_number) 
+        {
+            //check length
+            if(tel_number.length != 7) 
+            {
+                return false; //invalid length
+            }
+            //check numbers
+            for(var i = 0; i < tel_number.length; i++) 
+            {
+                if (!this.isNumber(tel_number[i]))
+                {
+                    return false; // invalid tel number
+                }
+            }
+        }
+        ,
+        isNumber: function(character) 
+        {
+            if (character != "0" && character != "1" && character != "2" && character != "3" && character != "4" && 
+                character != "5" && character != "6" && character != "7" && character != "8" && character != "9" )
+            {
+                return false;
+            }
+            return true;
+        }
+        ,
+        test_Tel_Validity: function(curr_Field, field, idx) 
+        { 
+            var prefix = document.getElementById("Combobox" + idx.toString());
+            if(this.is_Tel_Num_Valid(field.data) == false) 
+            {
+                curr_Field.style.backgroundColor = "red";
+                window.alert("Tel number is invalid, please make sure:\n1. Your input consists of numbers only\n2. Valid Israel telephone number length ");
+                return false; //abort operation, invalid phone number
+            }
+            else //tel number is valid
+            {
+                curr_Field.style.backgroundColor = "white"; //remove the red color
+                field.data = prefix.value + field.data;
+                return true;
+            }
+        }
+        ,
+        test_Email_Validity: function(curr_Field, field)
+        {
+            var domain = field.data.slice(field.data.indexOf("@") + 1); //get the domain portion of the email address
+            if (/^[a-zA-Z0-9][a-zA-Z0-9-]{1,61}[a-zA-Z0-9](?:\.[a-zA-Z]{2,})+$/.test(domain)) 
+            {
+                //email is valid
+                curr_Field.style.backgroundColor = "white";
+                return true;
+            }
+            else //email is invalid
+            { 
+                curr_Field.style.backgroundColor = "red";
+                window.alert("Invalid Email address");
+                return false;
+            }
         }
         ,
         form_Successfully_Submitted: function()
@@ -171,5 +294,14 @@ input {
 }
 p {
     color: white;
+}
+select {
+    padding: 5px 8px;
+    width: 4%;
+    border-width: 0 1px 0 1px;
+    border-style: solid;
+    box-shadow: none;
+    background: #f2f2f2;
+    font-family: HelveticaNeueW01-75Bold,HelveticaNeueW02-75Bold,HelveticaNeueW10-75Bold,Helvetica Neue,Arial,Helvetica,sans-serif;
 }
 </style>

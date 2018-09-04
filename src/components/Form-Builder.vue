@@ -204,7 +204,6 @@ export default
 
 </script>
 
-// })
 <style>
 html {
   color: white;
