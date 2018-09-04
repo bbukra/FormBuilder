@@ -14,7 +14,7 @@
 
 ### 4. Clone the repository to your machine using git (or download as zip)
 
-### 5. Open the /Run folder and execute the files in the following order (make sure you wait until each operation is completed) (Note: The leave the batch files from steps b, c, d open after completion):
+### 5. Open the /Run folder and execute the files in the following order (make sure you wait until each operation is completed) (Note: Leave the batch files from steps b, c, d open after completion):
 ###   a.  Run "Install modules.bat" (installing Python modules and Node_modules)
 ###   b.  Run "Run mongod.bat" (Creates C:\data\db directory for mongoDB and runs mongod)
 ###   c.  Run "Run Server.bat"
